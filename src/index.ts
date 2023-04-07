@@ -1,7 +1,9 @@
 class Money {
   protected amount = 0
   equals(money: Money) {
-    return this.amount === money.amount
+    console.log(Object.getPrototypeOf(money))
+    console.log(Object.getPrototypeOf(this))
+    return Object.getPrototypeOf(money) === Object.getPrototypeOf(this) && this.amount === money.amount
   }
 }
 export class Dollar extends Money {
