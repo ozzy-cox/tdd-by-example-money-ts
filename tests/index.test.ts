@@ -1,23 +1,24 @@
-import { Dollar, Franc } from '../src'
+import { Money } from '../src'
 
 describe('operations', () => {
   test('dollar multiplication', () => {
-    const five: Dollar = new Dollar(5)
-    expect(new Dollar(10).equals(five.times(2))).toBeTruthy()
-    expect(new Dollar(15).equals(five.times(3))).toBeTruthy()
+    const five: Money = Money.dollar(5)
+    expect(Money.dollar(10).equals(five.times(2))).toBeTruthy()
+    expect(Money.dollar(15).equals(five.times(3))).toBeTruthy()
   })
 
-  test('should test equality', () => {
-    expect(new Dollar(5).equals(new Dollar(5))).toBeTruthy()
-    expect(new Dollar(5).equals(new Dollar(6))).toBeFalsy()
-    expect(new Franc(5).equals(new Franc(5))).toBeTruthy()
-    expect(new Franc(5).equals(new Franc(6))).toBeFalsy()
-    expect(new Franc(5).equals(new Dollar(5))).toBeTruthy()
+  test('should test equality between different currencies', () => {
+    expect(Money.dollar(5).equals(Money.dollar(5))).toBeTruthy()
+    expect(Money.dollar(5).equals(Money.dollar(6))).toBeFalsy()
+    expect(Money.franc(5).equals(Money.dollar(5))).toBeFalsy()
   })
 
-  test('franc multiplication', () => {
-    const five: Franc = new Franc(5)
-    expect(new Franc(10).equals(five.times(2))).toBeTruthy()
-    expect(new Franc(15).equals(five.times(3))).toBeTruthy()
+  test('should compare currency', () => {
+    expect('USD').toEqual(Money.dollar(1).currency())
+    expect('CHF').toEqual(Money.franc(1).currency())
+  })
+
+  test('should add two of the same currecy', () => {
+    expect(Money.dollar(5).plus(Money.dollar(5)).equals(Money.dollar(10)))
   })
 })
